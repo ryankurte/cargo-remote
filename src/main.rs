@@ -49,9 +49,7 @@ fn push(folder: &str, target: &str) -> Result<(), ()> {
 	println!("Pushing source files from: '{}' to: '{}'", folder, target);
 
 	let output = Command::new("rsync")
-		.arg("--exclude")
-		.arg("target")
-		.arg("-rz")
+		.args(&["--exclude", "target", "-rz", "--delete"])
 		.args(&[folder, target])
 		.stdout(Stdio::inherit())
         .stderr(Stdio::inherit())
@@ -70,8 +68,7 @@ fn pull(target: &str, folder: &str) -> Result<(), ()> {
 	println!("Pulling build files from: '{}' to: '{}'", target, folder);
 
 	let output = Command::new("rsync")
-		.arg("-rz")
-		.args(&[target, folder])
+		.args(&["-rz", target, folder])
 		.stdout(Stdio::inherit())
         .stderr(Stdio::inherit())
 		.stdin(Stdio::inherit())
@@ -107,8 +104,8 @@ fn main() {
 
 	// Load environment
 	//let target_dir = env!("OUT_DIR");
-	let package_name = env!("CARGO_PKG_NAME");
-	let package_version = env!("CARGO_PKG_VERSION");
+	let package_name = std::env::var("CARGO_PKG_NAME").unwrap();
+	let package_version = std::env::var("CARGO_PKG_VERSION").unwrap();
 
 	let args = std::env::args();
 	println!("args: '{:?}'", args);
