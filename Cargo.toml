@@ -1,8 +1,11 @@
 [package]
 name = "cargo-remote"
+description = "Remote executor for cargo based on rsync and ssh"
 version = "0.1.0"
 authors = ["Ryan Kurte <ryankurte@gmail.com>"]
 edition = "2018"
+repository = "https://github.com/ryankurte/cargo-remote"
+license = "GPLv3"
 
 [dependencies]
 structopt = "0.2.14"

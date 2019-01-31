@@ -3,10 +3,8 @@ use std::process::Command;
 use std::io;
 use std::io::Write;
 
-#[macro_use]
 extern crate structopt;
 use structopt::StructOpt;
-
 
 #[derive(StructOpt, Debug)]
 struct Config {
