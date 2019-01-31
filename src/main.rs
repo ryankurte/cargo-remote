@@ -1,5 +1,5 @@
 
-use std::process::Command;
+use std::process::{Command, Stdio};
 use std::io;
 use std::io::Write;
 
@@ -53,15 +53,15 @@ fn push(folder: &str, target: &str) -> Result<(), ()> {
 		.arg("target")
 		.arg("-rz")
 		.args(&[folder, target])
+		.stdout(Stdio::inherit())
+        .stderr(Stdio::inherit())
+		.stdin(Stdio::inherit())
 		.output()
 		.expect("Failed to execute rsync push");
 
 	if output.status.success() {
 		Ok(())
 	} else {
-		io::stdout().write_all(&output.stdout).unwrap();
-		io::stderr().write_all(&output.stderr).unwrap();
-
 		Err(())
 	}
 }
@@ -72,15 +72,15 @@ fn pull(target: &str, folder: &str) -> Result<(), ()> {
 	let output = Command::new("rsync")
 		.arg("-rz")
 		.args(&[target, folder])
+		.stdout(Stdio::inherit())
+        .stderr(Stdio::inherit())
+		.stdin(Stdio::inherit())
 		.output()
 		.expect("Failed to execute rsync pull");
 
 	if output.status.success() {
 		Ok(())
 	} else {
-		io::stdout().write_all(&output.stdout).unwrap();
-		io::stderr().write_all(&output.stderr).unwrap();
-
 		Err(())
 	}
 }
@@ -90,11 +90,11 @@ fn exec(target: &str, cmd: &str) -> Result<(), ()> {
 
 	let output = Command::new("ssh")
 		.args(&[target, cmd])
+		.stdout(Stdio::inherit())
+        .stderr(Stdio::inherit())
+		.stdin(Stdio::inherit())
 		.output()
 		.expect("Failed to execute cmd");
-
-	io::stdout().write_all(&output.stdout).unwrap();
-	io::stderr().write_all(&output.stderr).unwrap();
 
 	if output.status.success() {
 		Ok(())
