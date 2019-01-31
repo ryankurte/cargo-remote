@@ -5,7 +5,7 @@ version = "0.1.0"
 authors = ["Ryan Kurte <ryankurte@gmail.com>"]
 edition = "2018"
 repository = "https://github.com/ryankurte/cargo-remote"
-license = "GPLv3"
+license = "GPL-3.0-or-later"
 
 [dependencies]
 structopt = "0.2.14"
